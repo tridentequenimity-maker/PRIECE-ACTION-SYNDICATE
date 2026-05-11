@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>AI Terminal Dashboard</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:'Inter',sans-serif;
+}
+
+body{
+  background:#000;
+  color:white;
+  overflow-x:hidden;
+}
+
+/* BACKGROUND */
+
+.bg{
+  position:fixed;
+  inset:0;
+  background-image:
+  linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+  linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+  background-size:50px 50px;
+  z-index:-5;
+}
+
+.glow-red{
+  position:fixed;
+  width:500px;
+  height:500px;
+  background:radial-gradient(circle, rgba(220,38,38,0.18), transparent 70%);
+  top:-150px;
+  right:-150px;
+  filter:blur(80px);
+  z-index:-4;
+}
+
+.glow-blue{
+  position:fixed;
+  width:500px;
+  height:500px;
+  background:radial-gradient(circle, rgba(59,130,246,0.12), transparent 70%);
+  bottom:-150px;
+  left:-150px;
+  filter:blur(80px);
+  z-index:-4;
+}
+
+/* NAVBAR */
+
+nav{
+  padding:24px 8%;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  border-bottom:1px solid rgba(255,255,255,0.05);
+  background:rgba(0,0,0,0.4);
+  backdrop-filter:blur(20px);
+  position:sticky;
+  top:0;
+}
+
+.logo{
+  font-size:22px;
+  font-weight:900;
+  letter-spacing:2px;
+}
+
+.logo span{
+  color:#dc2626;
+}
+
+.status{
+  color:#22c55e;
+  font-size:14px;
+}
+
+/* HERO */
+
+.hero{
+  padding:80px 8% 40px;
+}
+
+.badge{
+  display:inline-block;
+  padding:10px 20px;
+  border-radius:999px;
+  background:rgba(255,255,255,0.03);
+  border:1px solid rgba(255,255,255,0.08);
+  color:#9ca3af;
+  margin-bottom:25px;
+}
+
+.hero h1{
+  font-size:70px;
+  line-height:1;
+  margin-bottom:25px;
+}
+
+.hero h1 span{
+  background:linear-gradient(to right,#fff,#dc2626,#60a5fa);
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+}
+
+.hero p{
+  max-width:700px;
+  color:#9ca3af;
+  line-height:1.8;
+  font-size:18px;
+}
+
+/* GRID */
+
+.grid{
+  padding:40px 8% 100px;
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+  gap:25px;
+}
+
+/* CARD */
+
+.card{
+  background:rgba(255,255,255,0.03);
+  border:1px solid rgba(255,255,255,0.06);
+  border-radius:24px;
+  padding:35px;
+  backdrop-filter:blur(20px);
+  transition:0.3s;
+}
+
+.card:hover{
+  transform:translateY(-5px);
+  border:1px solid rgba(220,38,38,0.25);
+  box-shadow:0 0 50px rgba(220,38,38,0.15);
+}
+
+.card-title{
+  font-size:24px;
+  margin-bottom:18px;
+  font-weight:700;
+}
+
+.card-text{
+  color:#9ca3af;
+  line-height:1.8;
+}
+
+.green{
+  color:#22c55e;
+  font-weight:700;
+}
+
+.red{
+  color:#dc2626;
+  font-weight:700;
+}
+
+/* TERMINAL */
+
+.terminal{
+  background:#050505;
+  border-radius:24px;
+  padding:35px;
+  border:1px solid rgba(255,255,255,0.05);
+  margin:0 8% 100px;
+}
+
+.terminal-title{
+  margin-bottom:20px;
+  color:#9ca3af;
+}
+
+.terminal-text{
+  color:#22c55e;
+  line-height:2;
+  font-family:monospace;
+  font-size:15px;
+}
+
+/* BUTTONS */
+
+.buttons{
+  padding:0 8% 100px;
+  display:flex;
+  gap:20px;
+  flex-wrap:wrap;
+}
+
+.btn{
+  padding:18px 34px;
+  border:none;
+  border-radius:16px;
+  cursor:pointer;
+  font-weight:700;
+  transition:0.3s;
+}
+
+.btn-primary{
+  background:#dc2626;
+  color:white;
+  box-shadow:0 0 40px rgba(220,38,38,0.35);
+}
+
+.btn-primary:hover{
+  transform:translateY(-3px);
+}
+
+.btn-secondary{
+  background:rgba(255,255,255,0.03);
+  border:1px solid rgba(255,255,255,0.08);
+  color:white;
+}
+
+/* FOOTER */
+
+footer{
+  padding:60px 8%;
+  text-align:center;
+  border-top:1px solid rgba(255,255,255,0.05);
+  color:#6b7280;
+}
+
+/* RESPONSIVE */
+
+@media(max-width:900px){
+
+.hero h1{
+  font-size:48px;
+}
+
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="bg"></div>
+<div class="glow-red"></div>
+<div class="glow-blue"></div>
+
+<!-- NAVBAR -->
+
+<nav>
+
+<div class="logo">
+PRICE ACTION SYNDICATE<span>.</span>
+</div>
+
+<div class="status">
+● SYSTEM ONLINE
+</div>
+
+</nav>
+
+<!-- HERO -->
+
+<section class="hero">
+
+<div class="badge">
+AI MARKET INTELLIGENCE
+</div>
+
+<h1>
+ENTER THE <span>TRADING TERMINAL</span>
+</h1>
+
+<p>
+Advanced institutional trading intelligence system powered by adaptive execution logic, liquidity analysis, and precision-focused market structure technology.
+</p>
+
+</section>
+
+<!-- GRID -->
+
+<section class="grid">
+
+<div class="card">
+
+<div class="card-title">
+XAUUSD STATUS
+</div>
+
+<div class="card-text">
+Current Bias:
+<span class="green">BULLISH</span>
+
+<br><br>
+
+Liquidity sweep detected near institutional support zone.
+Momentum continuation probability increasing.
+</div>
+
+</div>
+
+<div class="card">
+
+<div class="card-title">
+AI ANALYSIS
+</div>
+
+<div class="card-text">
+Market structure indicates potential bullish continuation after volatility compression and liquidity absorption phase.
+</div>
+
+</div>
+
+<div class="card">
+
+<div class="card-title">
+SYSTEM STATUS
+</div>
+
+<div class="card-text">
+AI CORE:
+<span class="green">ACTIVE</span>
+
+<br><br>
+
+MARKET FEED:
+<span class="green">CONNECTED</span>
+
+<br><br>
+
+LATENCY:
+<span class="green">0.2s</span>
+</div>
+
+</div>
+
+<div class="card">
+
+<div class="card-title">
+SMART MONEY FLOW
+</div>
+
+<div class="card-text">
+Tracking institutional displacement and liquidity movement across high-volume execution zones.
+</div>
+
+</div>
+
+</section>
+
+<!-- TERMINAL -->
+
+<section class="terminal">
+
+<div class="terminal-title">
+LIVE TERMINAL
+</div>
+
+<div class="terminal-text">
+
+> INITIALIZING MARKET INTELLIGENCE...<br>
+> CONNECTING TO LIQUIDITY ENGINE...<br>
+> SYNCHRONIZING AI CORE...<br>
+> MARKET FEED CONNECTED<br>
+> INSTITUTIONAL FLOW DETECTED<br>
+> EXECUTION PROTOCOL ACTIVE<br>
+> ACCESS GRANTED
+
+</div>
+
+</section>
+
+<!-- BUTTONS -->
+
+<section class="buttons">
+
+<button class="btn btn-primary">
+START ANALYSIS
+</button>
+
+<button class="btn btn-secondary">
+VIP ACCESS
+</button>
+
+</section>
+
+<!-- FOOTER -->
+
+<footer>
+
+Powered by PRICE ACTION SYNDICATE<br><br>
+
+Engineered by fx_sysec🕸️
+
+</footer>
+
+</body>
+  </html>
