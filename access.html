@@ -378,10 +378,12 @@ SYSTEM STATUS
 
 <div class="buttons">
 
-<a href="login.html">
+<a href="#member-auth">
+
 <button class="btn-primary">
 VERIFY ACCESS
 </button>
+
 </a>
 
 <button class="btn-secondary">
@@ -403,6 +405,210 @@ Powered by PRICE ACTION SYNDICATE<br><br>
 Engineered by fx_sysec🕸️
 
 </footer>
+<!-- MEMBER AUTHENTICATION SECTION -->
 
+<section class="auth-section" id="member-auth">
+
+<div class="auth-container">
+
+<div class="auth-badge">
+VERIFIED MEMBER ACCESS
+</div>
+
+<h2>
+MEMBER <span>AUTHENTICATION</span>
+</h2>
+
+<p class="auth-desc">
+Institutional verification required before accessing the AI trading terminal infrastructure.
+</p>
+
+<!-- TERMINAL -->
+
+<div class="terminal-box">
+
+<div class="terminal-line">
+> VERIFYING SECURITY PROTOCOL...
+</div>
+
+<div class="terminal-line">
+> MEMBER ACCESS REQUIRED
+</div>
+
+<div class="terminal-line">
+> AI TERMINAL LOCKED
+</div>
+
+</div>
+
+<!-- LOGIN FORM -->
+
+<div class="login-box">
+
+<input type="text" placeholder="USERNAME">
+
+<input type="password" placeholder="ACCESS KEY">
+
+<a href="dashboard.html">
+
+<button class="login-btn">
+ENTER TERMINAL
+</button>
+
+</a>
+
+</div>
+
+</div>
+
+</section>
+
+<style>
+
+/* AUTH SECTION */
+
+.auth-section{
+padding:120px 8%;
+display:flex;
+justify-content:center;
+align-items:center;
+}
+
+.auth-container{
+width:100%;
+max-width:900px;
+padding:60px;
+border-radius:32px;
+background:rgba(255,255,255,0.03);
+border:1px solid rgba(255,255,255,0.06);
+backdrop-filter:blur(20px);
+position:relative;
+overflow:hidden;
+}
+
+.auth-container::before{
+content:'';
+position:absolute;
+width:350px;
+height:350px;
+background:radial-gradient(circle, rgba(220,38,38,0.18), transparent 70%);
+top:-150px;
+right:-120px;
+filter:blur(60px);
+}
+
+.auth-badge{
+display:inline-block;
+padding:12px 24px;
+border-radius:999px;
+background:rgba(255,255,255,0.03);
+border:1px solid rgba(255,255,255,0.08);
+color:#9ca3af;
+margin-bottom:30px;
+font-size:14px;
+}
+
+.auth-container h2{
+font-size:64px;
+line-height:1;
+margin-bottom:25px;
+font-weight:900;
+letter-spacing:-3px;
+}
+
+.auth-container h2 span{
+background:linear-gradient(to right,#fff,#dc2626,#60a5fa);
+-webkit-background-clip:text;
+-webkit-text-fill-color:transparent;
+}
+
+.auth-desc{
+max-width:700px;
+color:#9ca3af;
+line-height:1.9;
+font-size:18px;
+margin-bottom:45px;
+}
+
+/* TERMINAL */
+
+.terminal-box{
+padding:30px;
+border-radius:24px;
+background:#050505;
+border:1px solid rgba(255,255,255,0.05);
+margin-bottom:40px;
+}
+
+.terminal-line{
+color:#22c55e;
+font-family:monospace;
+line-height:2;
+font-size:15px;
+}
+
+/* LOGIN */
+
+.login-box{
+display:flex;
+flex-direction:column;
+gap:20px;
+}
+
+.login-box input{
+width:100%;
+padding:18px 22px;
+border-radius:16px;
+border:1px solid rgba(255,255,255,0.08);
+background:rgba(255,255,255,0.03);
+color:white;
+font-size:15px;
+outline:none;
+transition:0.3s;
+}
+
+.login-box input:focus{
+border:1px solid rgba(220,38,38,0.4);
+box-shadow:0 0 30px rgba(220,38,38,0.12);
+}
+
+.login-btn{
+width:100%;
+padding:20px;
+border:none;
+border-radius:16px;
+background:#dc2626;
+color:white;
+font-weight:700;
+font-size:15px;
+cursor:pointer;
+transition:0.3s;
+box-shadow:0 0 40px rgba(220,38,38,0.3);
+}
+
+.login-btn:hover{
+transform:translateY(-3px);
+box-shadow:0 0 70px rgba(220,38,38,0.45);
+}
+
+/* RESPONSIVE */
+
+@media(max-width:900px){
+
+.auth-container{
+padding:40px 25px;
+}
+
+.auth-container h2{
+font-size:42px;
+}
+
+.auth-desc{
+font-size:16px;
+}
+
+}
+
+</style>
 </body>
   </html>
