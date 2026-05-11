@@ -378,13 +378,9 @@ SYSTEM STATUS
 
 <div class="buttons">
 
-<a href="#member-auth">
-
-<button class="btn-primary">
+<button class="btn-primary" onclick="showAuth()">
 VERIFY ACCESS
 </button>
-
-</a>
 
 <button class="btn-secondary">
 JOIN VIP NETWORK
@@ -407,7 +403,7 @@ Engineered by fx_sysec🕸️
 </footer>
 <!-- MEMBER AUTHENTICATION SECTION -->
 
-<section class="auth-section" id="member-auth">
+<section class="auth-section hidden-auth" id="member-auth">
 
 <div class="auth-container">
 
@@ -473,7 +469,9 @@ display:flex;
 justify-content:center;
 align-items:center;
 }
-
+.hidden-auth{
+display:none;
+  }
 .auth-container{
 width:100%;
 max-width:900px;
@@ -610,5 +608,19 @@ font-size:16px;
 }
 
 </style>
+  <script>
+
+function showAuth(){
+
+document.querySelector('.hidden-auth').style.display = 'flex';
+
+document.getElementById('member-auth')
+.scrollIntoView({
+behavior:'smooth'
+});
+
+}
+
+  </script>
 </body>
   </html>
