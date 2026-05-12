@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>AI Technical Structure</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Inter',sans-serif;
+scroll-behavior:smooth;
+}
+
+body{
+background:#000;
+color:white;
+overflow-x:hidden;
+}
+
+/* BACKGROUND */
+
+.bg-grid{
+position:fixed;
+inset:0;
+background-image:
+linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+background-size:60px 60px;
+z-index:-5;
+mask-image:radial-gradient(circle at center, black 30%, transparent 85%);
+}
+
+.glow-red{
+position:fixed;
+width:700px;
+height:700px;
+background:radial-gradient(circle, rgba(220,38,38,0.16) 0%, transparent 70%);
+top:-250px;
+right:-200px;
+filter:blur(70px);
+z-index:-4;
+}
+
+.glow-blue{
+position:fixed;
+width:600px;
+height:600px;
+background:radial-gradient(circle, rgba(59,130,246,0.10) 0%, transparent 70%);
+bottom:-200px;
+left:-200px;
+filter:blur(70px);
+z-index:-4;
+}
+
+/* NAVBAR */
+
+nav{
+position:fixed;
+width:100%;
+top:0;
+padding:24px 8%;
+display:flex;
+justify-content:space-between;
+align-items:center;
+backdrop-filter:blur(20px);
+background:rgba(0,0,0,0.35);
+border-bottom:1px solid rgba(255,255,255,0.05);
+z-index:1000;
+}
+
+.logo{
+font-size:22px;
+font-weight:900;
+letter-spacing:2px;
+}
+
+.logo span{
+color:#dc2626;
+}
+
+.nav-status{
+color:#22c55e;
+font-size:14px;
+}
+
+/* HERO */
+
+.hero{
+min-height:80vh;
+display:flex;
+justify-content:center;
+align-items:center;
+text-align:center;
+padding:140px 8% 80px;
+}
+
+.hero-content{
+max-width:1000px;
+}
+
+.badge{
+display:inline-block;
+padding:12px 24px;
+border-radius:999px;
+background:rgba(255,255,255,0.03);
+border:1px solid rgba(255,255,255,0.08);
+color:#9ca3af;
+margin-bottom:30px;
+font-size:14px;
+}
+
+.hero h1{
+font-size:88px;
+line-height:0.95;
+font-weight:900;
+letter-spacing:-4px;
+margin-bottom:30px;
+}
+
+.hero h1 span{
+background:linear-gradient(to right,#ffffff,#dc2626,#60a5fa);
+-webkit-background-clip:text;
+-webkit-text-fill-color:transparent;
+}
+
+.hero p{
+max-width:760px;
+margin:auto;
+color:#9ca3af;
+font-size:20px;
+line-height:1.9;
+}
+
+/* TECH GRID */
+
+.tech-section{
+padding:40px 8% 120px;
+}
+
+.section-title{
+text-align:center;
+margin-bottom:70px;
+}
+
+.section-title h2{
+font-size:52px;
+margin-bottom:20px;
+}
+
+.section-title p{
+max-width:700px;
+margin:auto;
+line-height:1.9;
+color:#9ca3af;
+}
+
+.tech-grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(320px,1fr));
+gap:25px;
+}
+
+.tech-card{
+padding:40px;
+border-radius:28px;
+background:rgba(255,255,255,0.03);
+border:1px solid rgba(255,255,255,0.05);
+backdrop-filter:blur(20px);
+transition:0.35s;
+position:relative;
+overflow:hidden;
+}
+
+.tech-card:hover{
+transform:translateY(-6px);
+border:1px solid rgba(220,38,38,0.25);
+box-shadow:0 0 60px rgba(220,38,38,0.12);
+}
+
+.tech-card::before{
+content:'';
+position:absolute;
+width:260px;
+height:260px;
+background:radial-gradient(circle, rgba(220,38,38,0.14), transparent 70%);
+top:-120px;
+right:-120px;
+}
+
+.tech-card h3{
+font-size:30px;
+margin-bottom:20px;
+}
+
+.tech-card p{
+color:#9ca3af;
+line-height:1.9;
+}
+
+/* QUOTE */
+
+.quote{
+padding:120px 8%;
+text-align:center;
+}
+
+.quote h2{
+font-size:58px;
+line-height:1.2;
+max-width:900px;
+margin:auto;
+font-weight:800;
+letter-spacing:-2px;
+}
+
+.quote span{
+background:linear-gradient(to right,#fff,#dc2626);
+-webkit-background-clip:text;
+-webkit-text-fill-color:transparent;
+}
+
+/* FOOTER */
+
+footer{
+padding:80px 8%;
+text-align:center;
+border-top:1px solid rgba(255,255,255,0.05);
+color:#6b7280;
+}
+
+.footer-logo{
+font-size:28px;
+font-weight:900;
+margin-bottom:18px;
+letter-spacing:2px;
+}
+
+.footer-logo span{
+color:#dc2626;
+}
+
+.footer-text{
+max-width:700px;
+margin:auto;
+line-height:1.8;
+margin-bottom:25px;
+}
+
+/* RESPONSIVE */
+
+@media(max-width:900px){
+
+.hero h1{
+font-size:56px;
+}
+
+.section-title h2{
+font-size:40px;
+}
+
+.quote h2{
+font-size:38px;
+}
+
+.hero p{
+font-size:17px;
+}
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="bg-grid"></div>
+<div class="glow-red"></div>
+<div class="glow-blue"></div>
+
+<!-- NAVBAR -->
+
+<nav>
+
+<div class="logo">
+PRICE ACTION SYNDICATE<span>.</span>
+</div>
+
+<div class="nav-status">
+● AI FRAMEWORK ONLINE
+</div>
+
+</nav>
+
+<!-- HERO -->
+
+<section class="hero">
+
+<div class="hero-content">
+
+<div class="badge">
+AI TECHNICAL STRUCTURE
+</div>
+
+<h1>
+MASTER THE <span>INSTITUTIONAL FRAMEWORK</span>
+</h1>
+
+<p>
+Advanced technical ecosystem combining institutional liquidity behavior,
+market structure intelligence, adaptive execution logic, and proprietary trading frameworks.
+</p>
+
+</div>
+
+</section>
+
+<!-- TECH SECTION -->
+
+<section class="tech-section">
+
+<div class="section-title">
+
+<h2>
+TRADING FRAMEWORKS
+</h2>
+
+<p>
+Built around institutional concepts, liquidity engineering,
+and precision-based technical structure analysis.
+</p>
+
+</div>
+
+<div class="tech-grid">
+
+<div class="tech-card">
+
+<h3>Ichimoku Kinko Hyo</h3>
+
+<p>
+Equilibrium-based technical framework focused on momentum structure,
+cloud positioning, trend confirmation, and dynamic support resistance behavior.
+</p>
+
+</div>
+
+<div class="tech-card">
+
+<h3>Smart Money Concept</h3>
+
+<p>
+Institutional trading methodology analyzing liquidity sweeps,
+market structure shifts, displacement, inducement, and execution flow.
+</p>
+
+</div>
+
+<div class="tech-card">
+
+<h3>Inner Circle Trader</h3>
+
+<p>
+Advanced liquidity engineering framework centered around PD arrays,
+dealing ranges, institutional timing, and market manipulation concepts.
+</p>
+
+</div>
+
+<div class="tech-card">
+
+<h3>POI & AOI</h3>
+
+<p>
+Precision-based reaction zones identifying high probability institutional
+entry areas and key liquidity interaction points.
+</p>
+
+</div>
+
+<div class="tech-card">
+
+<h3>AMDX</h3>
+
+<p>
+Accumulation, manipulation, distribution, and expansion cycle model
+used for institutional narrative and volatility structure analysis.
+</p>
+
+</div>
+
+<div class="tech-card">
+
+<h3>MSNR</h3>
+
+<p>
+Market structure narrative reversal framework focused on momentum shifts,
+narrative transitions, and liquidity-based directional bias.
+</p>
+
+</div>
+
+<div class="tech-card">
+
+<h3>Alchemist Framework</h3>
+
+<p>
+Proprietary hybrid trading infrastructure engineered around psychology,
+market structure intelligence, and institutional execution logic.
+</p>
+
+</div>
+
+</div>
+
+</section>
+
+<!-- QUOTE -->
+
+<section class="quote">
+
+<h2>
+“Decode Liquidity.<br>
+<span>Master The Narrative.</span>”
+</h2>
+
+</section>
+
+<!-- FOOTER -->
+
+<footer>
+
+<div class="footer-logo">
+PRICE ACTION SYNDICATE<span>.</span>
+</div>
+
+<p class="footer-text">
+AI-powered institutional technical ecosystem designed for modern traders,
+market structure analysts, and precision-focused execution models.
+</p>
+
+Powered by OpenAI GPT-5 mini<br><br>
+
+Engineered by fx_sysec🕸️
+
+</footer>
+
+</body>
+
+  </html>
