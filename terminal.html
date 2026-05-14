@@ -384,7 +384,7 @@ const id = pair.replace("/","").toLowerCase();
 
 marketList.innerHTML += `
 
-<div class="market-card">
+<div class="market-card" onclick="openChart('${pair}')">
 
 <div class="market-top">
 
@@ -497,7 +497,13 @@ loadMarkets();
 /* AUTO REFRESH */
 
 setInterval(loadMarkets,60000);
+function openChart(pair){
 
+const symbol = pair.replace("/","");
+
+window.location.href = `chart.html?symbol=${symbol}`;
+
+  }
 </script>
 
 </body>
