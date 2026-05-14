@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>PAS AI TERMINAL</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Inter',sans-serif;
+}
+
+body{
+background:#050505;
+color:white;
+overflow-x:hidden;
+}
+
+/* BACKGROUND */
+
+body::before{
+content:'';
+position:fixed;
+inset:0;
+background-image:
+linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+background-size:45px 45px;
+z-index:-2;
+}
+
+body::after{
+content:'';
+position:fixed;
+width:500px;
+height:500px;
+background:radial-gradient(circle, rgba(220,38,38,0.10), transparent 70%);
+top:-150px;
+right:-150px;
+filter:blur(120px);
+z-index:-1;
+}
+
+/* NAVBAR */
+
+nav{
+padding:18px 22px;
+display:flex;
+justify-content:space-between;
+align-items:center;
+border-bottom:1px solid rgba(255,255,255,0.05);
+background:rgba(0,0,0,0.4);
+backdrop-filter:blur(20px);
+position:sticky;
+top:0;
+z-index:999;
+}
+
+.logo{
+font-size:13px;
+font-weight:800;
+letter-spacing:2px;
+}
+
+.logo span{
+color:#dc2626;
+}
+
+.live{
+display:flex;
+align-items:center;
+gap:8px;
+font-size:11px;
+color:#22c55e;
+}
+
+.dot{
+width:8px;
+height:8px;
+border-radius:50%;
+background:#22c55e;
+box-shadow:0 0 10px #22c55e;
+animation:pulse 1.5s infinite;
+}
+
+@keyframes pulse{
+
+0%{
+opacity:1;
+transform:scale(1);
+}
+
+50%{
+opacity:0.4;
+transform:scale(0.8);
+}
+
+100%{
+opacity:1;
+transform:scale(1);
+}
+
+}
+
+/* HERO */
+
+.hero{
+padding:34px 22px 20px;
+}
+
+.hero h1{
+font-size:28px;
+font-weight:800;
+margin-bottom:10px;
+}
+
+.hero p{
+font-size:12px;
+color:#9ca3af;
+line-height:1.9;
+max-width:650px;
+}
+
+/* STATS */
+
+.stats{
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:12px;
+padding:0 18px;
+margin-bottom:20px;
+}
+
+.stat{
+background:rgba(255,255,255,0.03);
+border:1px solid rgba(255,255,255,0.05);
+padding:16px;
+border-radius:18px;
+backdrop-filter:blur(20px);
+}
+
+.stat small{
+font-size:10px;
+color:#6b7280;
+letter-spacing:1px;
+}
+
+.stat h3{
+margin-top:8px;
+font-size:15px;
+}
+
+/* MARKET LIST */
+
+.market-container{
+padding:0 18px 30px;
+display:flex;
+flex-direction:column;
+gap:12px;
+}
+
+.market-card{
+background:rgba(255,255,255,0.03);
+border:1px solid rgba(255,255,255,0.05);
+border-radius:20px;
+padding:16px;
+backdrop-filter:blur(20px);
+transition:0.3s;
+}
+
+.market-card:hover{
+background:rgba(255,255,255,0.05);
+transform:translateY(-2px);
+}
+
+.market-top{
+display:flex;
+justify-content:space-between;
+align-items:flex-start;
+margin-bottom:10px;
+}
+
+.market-name{
+font-size:11px;
+font-weight:700;
+letter-spacing:1px;
+color:#ffffff;
+}
+
+.market-change{
+font-size:11px;
+font-weight:700;
+font-family:monospace;
+}
+
+.market-price{
+font-size:24px;
+font-weight:700;
+margin-bottom:10px;
+letter-spacing:1px;
+}
+
+.market-bottom{
+display:flex;
+justify-content:space-between;
+align-items:center;
+font-size:10px;
+color:#9ca3af;
+font-family:monospace;
+gap:10px;
+flex-wrap:wrap;
+}
+
+.live-status{
+display:flex;
+align-items:center;
+gap:6px;
+color:#22c55e;
+}
+
+/* TERMINAL */
+
+.terminal{
+margin:0 18px 30px;
+padding:20px;
+border-radius:20px;
+background:#080808;
+border:1px solid rgba(255,255,255,0.05);
+}
+
+.terminal-title{
+font-size:11px;
+letter-spacing:1px;
+color:#6b7280;
+margin-bottom:14px;
+}
+
+.log{
+font-size:11px;
+font-family:monospace;
+line-height:2;
+color:#22c55e;
+}
+
+/* FOOTER */
+
+footer{
+padding:30px 20px;
+text-align:center;
+font-size:11px;
+color:#6b7280;
+line-height:2;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+
+<nav>
+
+<div class="logo">
+PRICE ACTION SYNDICATE<span>.</span>
+</div>
+
+<div class="live">
+<div class="dot"></div>
+LIVE MARKET
+</div>
+
+</nav>
+
+<!-- HERO -->
+
+<section class="hero">
+
+<h1>AI MARKET TERMINAL</h1>
+
+<p>
+Institutional multi-market terminal powered by PAS AI infrastructure and TwelveData real-time market feed.
+</p>
+
+</section>
+
+<!-- STATS -->
+
+<div class="stats">
+
+<div class="stat">
+<small>MARKETS</small>
+<h3>20 PAIRS</h3>
+</div>
+
+<div class="stat">
+<small>AI STATUS</small>
+<h3>ONLINE</h3>
+</div>
+
+<div class="stat">
+<small>DATA FEED</small>
+<h3>LIVE</h3>
+</div>
+
+</div>
+
+<!-- MARKET LIST -->
+
+<div class="market-container" id="market-list"></div>
+
+<!-- TERMINAL -->
+
+<div class="terminal">
+
+<div class="terminal-title">
+AI TERMINAL LOG
+</div>
+
+<div class="log">
+> CONNECTING TWELVEDATA API...<br>
+> PAS AI CORE SYNCHRONIZED<br>
+> REAL-TIME MARKET ENABLED<br>
+> MULTI ASSET TERMINAL READY<br>
+> LIQUIDITY ENGINE ACTIVE
+</div>
+
+</div>
+
+<footer>
+
+Powered by PRICE ACTION SYNDICATE<br>
+fx_sysec🕸️
+
+</footer>
+
+<script>
+
+const apiKey = "ea87f546b7714ba7ac40d5fdac2f6d74";
+
+const pairs = [
+
+"XAU/USD",
+"XAG/USD",
+"EUR/USD",
+"GBP/USD",
+"USD/JPY",
+"AUD/USD",
+"NZD/USD",
+"USD/CAD",
+"USD/CHF",
+"EUR/JPY",
+"GBP/JPY",
+"EUR/GBP",
+"BTC/USD",
+"ETH/USD",
+"SOL/USD",
+"XRP/USD",
+"BNB/USD",
+"ADA/USD",
+"DOGE/USD",
+"AVAX/USD"
+
+];
+
+const marketList = document.getElementById("market-list");
+
+/* CREATE CARDS */
+
+pairs.forEach(pair => {
+
+const id = pair.replace("/","").toLowerCase();
+
+marketList.innerHTML += `
+
+<div class="market-card">
+
+<div class="market-top">
+
+<div class="market-name">
+${pair.replace("/","")}
+</div>
+
+<div class="market-change" id="${id}-change">
+0.00%
+</div>
+
+</div>
+
+<div class="market-price" id="${id}-price">
+LOADING
+</div>
+
+<div class="market-bottom">
+
+<div id="${id}-hl">
+H -- | L --
+</div>
+
+<div id="${id}-volume">
+VOL --
+</div>
+
+<div class="live-status">
+<div class="dot"></div>
+LIVE
+</div>
+
+</div>
+
+</div>
+
+`;
+
+});
+
+/* LOAD MARKET */
+
+async function loadMarkets(){
+
+for(const pair of pairs){
+
+try{
+
+const id = pair.replace("/","").toLowerCase();
+
+const response = await fetch(
+`https://api.twelvedata.com/quote?symbol=${encodeURIComponent(pair)}&apikey=${apiKey}`
+);
+
+const data = await response.json();
+
+/* PRICE */
+
+const price = data.close || "OFF";
+
+document.getElementById(`${id}-price`).innerHTML = price;
+
+/* CHANGE */
+
+const percent = parseFloat(data.percent_change || 0);
+
+const changeEl = document.getElementById(`${id}-change`);
+
+changeEl.innerHTML = percent.toFixed(2) + "%";
+
+if(percent >= 0){
+
+changeEl.style.color = "#22c55e";
+
+}else{
+
+changeEl.style.color = "#ef4444";
+
+}
+
+/* HIGH LOW */
+
+const high = data.high || "--";
+const low = data.low || "--";
+
+document.getElementById(`${id}-hl`).innerHTML =
+`H ${high} | L ${low}`;
+
+/* VOLUME */
+
+const volume = data.volume || "N/A";
+
+document.getElementById(`${id}-volume`).innerHTML =
+`VOL ${volume}`;
+
+}catch(error){
+
+console.log(error);
+
+}
+
+}
+
+}
+
+/* FIRST LOAD */
+
+loadMarkets();
+
+/* AUTO REFRESH */
+
+setInterval(loadMarkets,60000);
+
+</script>
+
+</body>
+  </html>
