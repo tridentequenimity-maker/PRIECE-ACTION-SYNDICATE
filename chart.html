@@ -90,6 +90,11 @@ font-size:12px;
 font-weight:600;
 letter-spacing:1px;
 }
+.symbol-row{
+display:flex;
+align-items:center;
+gap:6px;
+}
 .symbol-group{
 display:flex;
 flex-direction:column;
@@ -201,22 +206,21 @@ PRICE ACTION SYNDICATE<span>.</span>
 
 <div class="symbol-box">
 
-<div class="dot"></div>
+  <div class="symbol-group">
 
-<div class="symbol-group">
-
-  <div class="symbol" id="symbol-name">
-  XAUUSD
-  </div>
-
-  <div class="online-box">
-    <div class="online-dot"></div>
-    <div class="online-text" id="online-users">
-    12 ONLINE
+    <div class="symbol-row">
+      <div class="dot"></div>
+      <div class="symbol" id="symbol-name">XAUUSD</div>
     </div>
-  </div>
 
-</div>
+    <div class="online-box">
+      <div class="online-dot"></div>
+      <div class="online-text" id="online-users">
+      12 ONLINE
+      </div>
+    </div>
+
+  </div>
 
 </div>
 
