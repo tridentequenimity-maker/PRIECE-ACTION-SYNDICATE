@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>PAS LIVE CHART</title>
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
+
+body{
+background:#050505;
+overflow:hidden;
+font-family:Arial,sans-serif;
+color:white;
+}
+
+/* TOPBAR */
+
+.topbar{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:55px;
+background:rgba(0,0,0,0.85);
+backdrop-filter:blur(20px);
+display:flex;
+align-items:center;
+justify-content:space-between;
+padding:0 18px;
+z-index:9999;
+border-bottom:1px solid rgba(255,255,255,0.05);
+}
+
+.logo{
+font-size:12px;
+font-weight:700;
+letter-spacing:2px;
+}
+
+.logo span{
+color:#dc2626;
+}
+
+.symbol-box{
+display:flex;
+align-items:center;
+gap:10px;
+}
+
+.dot{
+width:8px;
+height:8px;
+border-radius:50%;
+background:#22c55e;
+box-shadow:0 0 10px #22c55e;
+animation:pulse 1.5s infinite;
+}
+
+@keyframes pulse{
+
+0%{
+opacity:1;
+transform:scale(1);
+}
+
+50%{
+opacity:0.4;
+transform:scale(0.8);
+}
+
+100%{
+opacity:1;
+transform:scale(1);
+}
+
+}
+
+.symbol{
+font-size:12px;
+font-weight:600;
+letter-spacing:1px;
+}
+
+/* CHART */
+
+#tradingview_chart{
+width:100vw;
+height:calc(100dvh - 165px);
+padding-top:55px;
+}
+
+/* AI PANEL */
+
+.ai-panel{
+position:fixed;
+bottom:0;
+left:0;
+width:100%;
+height:110px;
+background:rgba(0,0,0,0.92);
+backdrop-filter:blur(20px);
+border-top:1px solid rgba(255,255,255,0.05);
+padding:16px 18px;
+display:flex;
+justify-content:space-between;
+align-items:center;
+z-index:9999;
+}
+
+/* LEFT */
+
+.ai-left{
+display:flex;
+flex-direction:column;
+gap:8px;
+}
+
+.ai-title{
+font-size:10px;
+color:#6b7280;
+letter-spacing:1px;
+}
+
+.signal{
+font-size:18px;
+font-weight:700;
+letter-spacing:1px;
+}
+
+.signal-status{
+font-size:11px;
+color:#9ca3af;
+}
+
+/* RIGHT */
+
+.ai-right{
+display:flex;
+flex-direction:column;
+align-items:flex-end;
+gap:7px;
+}
+
+.data{
+font-size:11px;
+font-family:monospace;
+color:#d1d5db;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<!-- TOPBAR -->
+
+<div class="topbar">
+
+<div class="logo">
+PRICE ACTION SYNDICATE<span>.</span>
+</div>
+
+<div class="symbol-box">
+
+<div class="dot"></div>
+
+<div class="symbol" id="symbol-name">
+XAUUSD
+</div>
+
+</div>
+
+</div>
+
+<!-- CHART -->
+
+<div id="tradingview_chart"></div>
+
+<!-- AI PANEL -->
+
+<div class="ai-panel">
+
+<div class="ai-left">
+
+<div class="ai-title">
+AI MARKET STRUCTURE
+</div>
+
+<div class="signal" id="signal">
+ANALYZING...
+</div>
+
+<div class="signal-status" id="signal-status">
+WAITING MARKET DATA
+</div>
+
+</div>
+
+<div class="ai-right">
+
+<div class="data" id="price">
+PRICE -- 
+</div>
+
+<div class="data" id="highlow">
+H -- | L --
+</div>
+
+<div class="data" id="change">
+CHANGE --
+</div>
+
+</div>
+
+</div>
+
+<!-- TRADINGVIEW -->
+
+<script src="https://s3.tradingview.com/tv.js"></script>
+
+<script>
+
+/* API KEY */
+
+const apiKey = "ea87f546b7714ba7ac40d5fdac2f6d74";
+
+/* GET SYMBOL */
+
+const params = new URLSearchParams(window.location.search);
+
+let symbol = params.get("symbol") || "XAUUSD";
+
+/* DISPLAY */
+
+document.getElementById("symbol-name").innerHTML = symbol;
+
+/* TV SYMBOL */
+
+let tvSymbol = "";
+
+/* FOREX */
+
+if(
+symbol === "XAUUSD" ||
+symbol === "XAGUSD" ||
+symbol === "EURUSD" ||
+symbol === "GBPUSD" ||
+symbol === "USDJPY" ||
+symbol === "AUDUSD" ||
+symbol === "NZDUSD" ||
+symbol === "USDCAD" ||
+symbol === "USDCHF" ||
+symbol === "EURJPY" ||
+symbol === "GBPJPY" ||
+symbol === "EURGBP"
+){
+
+tvSymbol = "OANDA:" + symbol;
+
+}
+
+/* CRYPTO */
+
+else{
+
+tvSymbol = "BINANCE:" + symbol;
+
+}
+
+/* LOAD TRADINGVIEW */
+
+new TradingView.widget({
+
+"container_id": "tradingview_chart",
+
+"width": "100%",
+"height": "100%",
+
+"symbol": tvSymbol,
+
+"interval": "15",
+
+"timezone": "Asia/Jakarta",
+
+"theme": "dark",
+
+"style": "1",
+
+"locale": "en",
+
+"toolbar_bg": "#050505",
+
+"enable_publishing": false,
+
+"hide_side_toolbar": false,
+
+"allow_symbol_change": true,
+
+"withdateranges": true,
+
+"save_image": false,
+
+"studies": [
+"IchimokuCloud@tv-basicstudies"
+]
+
+});
+
+/* LOAD MARKET DATA */
+
+async function loadSignal(){
+
+try{
+
+/* PRICE */
+
+const quote = await fetch(
+`https://api.twelvedata.com/quote?symbol=${symbol.replace("USD","/USD")}&apikey=${apiKey}`
+);
+
+const quoteData = await quote.json();
+
+/* EMA 20 */
+
+const ema20 = await fetch(
+`https://api.twelvedata.com/ema?symbol=${symbol.replace("USD","/USD")}&interval=15min&time_period=20&series_type=close&apikey=${apiKey}`
+);
+
+const ema20Data = await ema20.json();
+
+/* EMA 50 */
+
+const ema50 = await fetch(
+`https://api.twelvedata.com/ema?symbol=${symbol.replace("USD","/USD")}&interval=15min&time_period=50&series_type=close&apikey=${apiKey}`
+);
+
+const ema50Data = await ema50.json();
+
+/* DATA */
+
+const price = parseFloat(quoteData.close || 0);
+
+const high = quoteData.high || "--";
+const low = quoteData.low || "--";
+
+const change = parseFloat(quoteData.percent_change || 0);
+
+const ema20Value = parseFloat(ema20Data.values[0].ema);
+
+const ema50Value = parseFloat(ema50Data.values[0].ema);
+
+/* DISPLAY */
+
+document.getElementById("price").innerHTML =
+`PRICE ${price}`;
+
+document.getElementById("highlow").innerHTML =
+`H ${high} | L ${low}`;
+
+document.getElementById("change").innerHTML =
+`CHANGE ${change.toFixed(2)}%`;
+
+/* SIGNAL */
+
+const signal = document.getElementById("signal");
+
+const signalStatus = document.getElementById("signal-status");
+
+/* BULLISH */
+
+if(
+price > ema20Value &&
+ema20Value > ema50Value
+){
+
+signal.innerHTML = "BULLISH";
+
+signal.style.color = "#22c55e";
+
+signalStatus.innerHTML = "MARKET ABOVE TREND STRUCTURE";
+
+/* BEARISH */
+
+}else if(
+price < ema20Value &&
+ema20Value < ema50Value
+){
+
+signal.innerHTML = "BEARISH";
+
+signal.style.color = "#ef4444";
+
+signalStatus.innerHTML = "MARKET BELOW TREND STRUCTURE";
+
+/* SIDEWAYS */
+
+}else{
+
+signal.innerHTML = "SIDEWAYS";
+
+signal.style.color = "#eab308";
+
+signalStatus.innerHTML = "MARKET INSIDE CONSOLIDATION";
+
+}
+
+}catch(error){
+
+console.log(error);
+
+}
+
+}
+
+/* FIRST LOAD */
+
+loadSignal();
+
+/* AUTO REFRESH */
+
+setInterval(loadSignal,60000);
+
+</script>
+
+</body>
+  </html>
