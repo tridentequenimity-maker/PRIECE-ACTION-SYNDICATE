@@ -436,7 +436,28 @@ loadSignal();
 /* AUTO REFRESH */
 
 setInterval(loadSignal,60000);
+let users = 12;
 
+setInterval(()=>{
+
+let change = Math.floor(
+Math.random()*3
+)-1;
+
+users += change;
+
+if(users < 7){
+users = 7;
+}
+
+if(users > 18){
+users = 18;
+}
+
+document.getElementById("online-users")
+.innerHTML = users + " ONLINE";
+
+},60000);
 </script>
 
 </body>
